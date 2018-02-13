@@ -177,16 +177,20 @@ function refreshChat() {
 		data: dataString,
 		dataType: "json",
 		cache: false,
-		//error: function(er) {
-        //  document.getElementById("chat-div").innerHTML = er.responseText;
-        //},
 		success: function(html){
 			for (var i = 0; i < html.length; i++) {
 				if(messages.find(function(id){ return id == html[i].id}) == undefined) {
-					var div1 = html[i].date_time.split(" ");
-					var date_div = div1[0].split("-");
-					var time_div = div1[1].split(":");
-					var date_time = time_div[0]+":"+time_div[1]+" "+date_div[1]+"/"+date_div[2]+"/"+date_div[0];
+					var date = new Date(html[i].date_time + ' UTC');
+					//var div1 = html[i].date_time.split(" ");
+					//var date_div = div1[0].split("-");
+					//var time_div = div1[1].split(":");
+					//var date_time = time_div[0]+":"+time_div[1]+" "+date_div[1]+"/"+date_div[2]+"/"+date_div[0];
+					var date_time =
+					    ("0" + (date.getMonth()+1)).slice(-2) + "/" +
+					    ("0" + date.getDate()).slice(-2) + "/" +
+					    date.getFullYear() + " " +
+					    ("0" + date.getHours()).slice(-2) + ":" +
+					    ("0" + date.getMinutes()).slice(-2);
 					messages.push(html[i].id);
 			    	document.getElementById("chat-div").innerHTML += "<div class='chat-message'>"+html[i].user+": "+html[i].message+"</div><div class='chat-message-time'>"+date_time+"</div>";
 					document.getElementById("chat-div").scrollTo(0,document.getElementById("chat-div").scrollHeight);

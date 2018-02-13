@@ -95,7 +95,7 @@
 		}
 
 		if($operation == "sendMessage"){
-
+			//date_default_timezone_set("America/Sao_Paulo");
 			$message = mysqli_real_escape_string($link, $_POST['message']);
 			$sql = "INSERT INTO message (content, date_time, room, user)
 	            VALUES ('".$message."', '".date("Y-m-d H:i:s")."', '0', '".$_SESSION["id"]."')";
